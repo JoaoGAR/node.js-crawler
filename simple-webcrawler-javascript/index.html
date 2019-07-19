@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>teste</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="canonical" href="https://robwu.nl/cors-anywhere.html">
+</head>
+<body>
+
+	<div class="container">
+		<div>
+			<input type="text" id="target_url" name="target_url">
+			<button id="trigger" type="button">BUSCAR</button>
+		</div>
+
+		<div id="data"></div>
+	</div>
+
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		jQuery.ajaxPrefilter(function(options) {
+			if (options.crossDomain && jQuery.support.cors) {
+				options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+			}
+		});
+
+		$('#trigger').click(function(e){
+			url = $('#target_url').val();
+			url = 'https://www.americanas.com.br/busca/prima-c-210-1195-c210?rc=Prima+C+210++1195+C210';
+
+			url2 = 'https://www.leroymerlin.com.br/torneiras';
+
+			$.ajax({
+				url: url,
+				type: "GET",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("Access-Control-Allow-Headers", "x-requested-with, x-requested-by");
+				},
+				success: function (data) {
+					data = $.parseHTML(data);
+					prices = $(data).find('.doPTSH').clone();
+					console.log(prices);
+
+					for (var i = prices.length - 1; i >= 0; i--) {
+						price = prices[i].innerText.split(" ");
+
+						for (var j = price.length - 1; j >= 0; j--) {
+
+							priceFormated = parseFloat(price[j]);
+							console.log(price[j]+" - "+priceFormated);
+
+							if(typeof priceFormated == 'number'){
+								$('#data').append(priceFormated);
+							}
+
+						}
+
+					}
+					
+				}
+			});
+
+		});
+
+	});
+</script>
+</html>

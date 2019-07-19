@@ -1,0 +1,12 @@
+{
+  "name": "simple-webcrawler-javascript",
+  "version": "0.0.0",
+  "description": "A simple webscraper written in JavaScript",
+  "main": "scrape-reddit.js",
+  "author": "j_jgar",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "request": "^2.65.0"
+  }
+}
